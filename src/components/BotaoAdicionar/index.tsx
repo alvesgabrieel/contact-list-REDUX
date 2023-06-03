@@ -5,10 +5,8 @@ import * as S from './styles'
 
 const BotaoAdicionar = () => {
   return (
-    <S.BotaoAdicionar to="/novo">
-      <MdAddCircle
-        style={{ color: `${variaveis.azul}`, height: '70px', width: '70px' }}
-      />
+    <S.BotaoAdicionar to="/novoContato">
+      <MdAddCircle style={{ color: '#fff', height: '70px', width: '70px' }} />
     </S.BotaoAdicionar>
   )
 }

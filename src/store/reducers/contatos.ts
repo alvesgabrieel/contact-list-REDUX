@@ -10,37 +10,37 @@ const initialState: ContatoState = {
     {
       idContato: 1,
       nomeContato: 'Gabriel Alves',
-      numeroCelular: 84991937644
+      numeroCelular: '84991937644'
     },
     {
       idContato: 2,
       nomeContato: 'Lara Maria',
-      numeroCelular: 84991563400
+      numeroCelular: '84991563400'
     },
     {
       idContato: 3,
       nomeContato: 'Geraldo Alves',
-      numeroCelular: 84991237777
+      numeroCelular: '84991237777'
     },
     {
       idContato: 4,
       nomeContato: 'Vera Medeiros',
-      numeroCelular: 84991237777
+      numeroCelular: '84991237777'
     },
     {
       idContato: 5,
       nomeContato: 'Camile Medeiros',
-      numeroCelular: 84991237777
+      numeroCelular: '84991237777'
     },
     {
       idContato: 6,
       nomeContato: 'Bruna Alves',
-      numeroCelular: 84991237777
+      numeroCelular: '84991237777'
     },
     {
       idContato: 7,
       nomeContato: 'Raiza França',
-      numeroCelular: 84991237777
+      numeroCelular: '84991237777'
     }
   ]
 }
@@ -49,7 +49,7 @@ const contatoSlice = createSlice({
   name: 'contato',
   initialState,
   reducers: {
-    adicionar: (state, action: PayloadAction<Omit<Contato, 'id'>>) => {
+    adicionar: (state, action: PayloadAction<Contato>) => {
       const contatoJaExiste = state.contatos.find(
         (contato) => contato.numeroCelular === action.payload.numeroCelular
       )
@@ -57,14 +57,7 @@ const contatoSlice = createSlice({
       if (contatoJaExiste) {
         alert('Ja existe um contato com esse número de celular')
       } else {
-        const ultimoContato = state.contatos[state.contatos.length - 1]
-
-        const novoContato = {
-          ...action.payload,
-          idContato: ultimoContato ? ultimoContato.idContato + 1 : 1
-        }
-
-        state.contatos.push(novoContato)
+        state.contatos.push(action.payload)
       }
     }
   }

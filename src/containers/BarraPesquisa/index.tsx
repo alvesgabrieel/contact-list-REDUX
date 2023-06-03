@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import * as S from './styles'
 import { RootReducer } from '../../store'
 import { alterarTermo } from '../../store/reducers/filtro'
+import BotaoAdicionar from '../../components/BotaoAdicionar'
 
 const BarraPesquisa = () => {
   const dispatch = useDispatch()
@@ -10,6 +11,7 @@ const BarraPesquisa = () => {
   return (
     <div>
       <label htmlFor="nome">
+        <BotaoAdicionar />
         <S.Input
           type="text"
           id="nome"

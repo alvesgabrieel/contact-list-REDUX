@@ -5,6 +5,7 @@ import EstiloGlobal, { Container } from './styles'
 
 import { store } from './store'
 import Home from './pages/Home'
+import NovaContato from './pages/NovoContato'
 
 const rotas = createBrowserRouter([
   {
@@ -12,8 +13,8 @@ const rotas = createBrowserRouter([
     element: <Home />
   },
   {
-    path: '/novo',
-    element: <h1>novo</h1>
+    path: '/novoContato',
+    element: <NovaContato />
   }
 ])
 

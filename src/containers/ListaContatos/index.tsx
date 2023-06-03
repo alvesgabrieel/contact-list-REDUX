@@ -2,7 +2,6 @@ import { useSelector } from 'react-redux'
 
 import { RootReducer } from '../../store'
 import Contato from '../../components/Contato'
-import BotaoAdicionar from '../../components/BotaoAdicionar'
 import * as S from './styles'
 
 const ListaContatos = () => {
@@ -23,13 +22,12 @@ const ListaContatos = () => {
           <S.Lista key={itens.idContato}>
             <Contato
               nomeContato={itens.nomeContato}
-              idContato={0}
-              numeroCelular={0}
+              idContato={itens.idContato}
+              numeroCelular={itens.numeroCelular}
             />
           </S.Lista>
         ))}
       </ul>
-      <BotaoAdicionar />
     </>
   )
 }

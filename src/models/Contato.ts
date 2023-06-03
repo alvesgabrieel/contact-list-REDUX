@@ -1,9 +1,9 @@
 class Contato {
   idContato: number
   nomeContato: string
-  numeroCelular: number
+  numeroCelular: string
 
-  constructor(id: number, nome: string, numero: number) {
+  constructor(id: number, nome: string, numero: string) {
     this.idContato = id
     this.nomeContato = nome
     this.numeroCelular = numero
