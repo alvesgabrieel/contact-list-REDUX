@@ -1,16 +1,18 @@
 import { FormEvent, useState } from 'react'
 import { IoMdContact } from 'react-icons/io'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import * as S from './styles'
 import variaveis from '../../styles/variaveis'
 import { adicionar } from '../../store/reducers/contatos'
 import Contato from '../../models/Contato'
+import { RootReducer } from '../../store'
 
 const NovoContato = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { contatos } = useSelector((state: RootReducer) => state.contatos)
 
   const [nome, setNome] = useState('')
   const [numero, setNumero] = useState('')
@@ -18,10 +20,11 @@ const NovoContato = () => {
   const cadastrarNumero = (e: FormEvent) => {
     e.preventDefault()
 
-    const contatoParaAdicionar = new Contato(9, nome, numero)
+    const contatoParaAdicionar = new Contato(1, nome, numero)
 
     dispatch(adicionar(contatoParaAdicionar))
     navigate('/')
+    console.log(contatos)
   }
 
   return (
@@ -37,8 +40,9 @@ const NovoContato = () => {
           }}
         />
         <S.ContainerInputs>
-          <S.Label htmlFor="nome">Nome:</S.Label>
-          <S.Input
+          <S.Label htmlFor="nome">Nome e Sobrenome:</S.Label>
+          <S.StyledInputMask
+            mask=""
             type="text"
             id="nome"
             autoComplete="off"
@@ -46,7 +50,8 @@ const NovoContato = () => {
             onChange={({ target }) => setNome(target.value)}
           />
           <S.Label htmlFor="numero">Numero:</S.Label>
-          <S.Input
+          <S.StyledInputMask
+            mask="(99) 99999-9999"
             type="text"
             id="numero"
             autoComplete="off"

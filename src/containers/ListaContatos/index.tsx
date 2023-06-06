@@ -17,6 +17,7 @@ const ListaContatos = () => {
 
   return (
     <>
+      <S.Titulo>Clique no contato para editar ou remover</S.Titulo>
       <ul>
         {filtraTarefas().map((itens) => (
           <S.Lista key={itens.idContato}>

@@ -1,6 +1,5 @@
 import { MdAddCircle } from 'react-icons/md'
 
-import variaveis from '../../styles/variaveis'
 import * as S from './styles'
 
 const BotaoAdicionar = () => {

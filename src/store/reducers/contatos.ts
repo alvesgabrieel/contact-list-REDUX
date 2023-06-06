@@ -10,37 +10,37 @@ const initialState: ContatoState = {
     {
       idContato: 1,
       nomeContato: 'Gabriel Alves',
-      numeroCelular: '84991937644'
+      numeroCelular: '(84)99193-7644'
     },
     {
       idContato: 2,
       nomeContato: 'Lara Maria',
-      numeroCelular: '84991563400'
+      numeroCelular: '(84)99184-3465'
     },
     {
       idContato: 3,
       nomeContato: 'Geraldo Alves',
-      numeroCelular: '84991237777'
+      numeroCelular: '(84)99172-8675'
     },
     {
       idContato: 4,
       nomeContato: 'Vera Medeiros',
-      numeroCelular: '84991237777'
+      numeroCelular: '(84)99193-1386'
     },
     {
       idContato: 5,
       nomeContato: 'Camile Medeiros',
-      numeroCelular: '84991237777'
+      numeroCelular: '(84)99100-0944'
     },
     {
       idContato: 6,
       nomeContato: 'Bruna Alves',
-      numeroCelular: '84991237777'
+      numeroCelular: '(84)99132-7654'
     },
     {
       idContato: 7,
       nomeContato: 'Raiza França',
-      numeroCelular: '84991237777'
+      numeroCelular: '(84)99193-4815'
     }
   ]
 }
@@ -49,7 +49,8 @@ const contatoSlice = createSlice({
   name: 'contato',
   initialState,
   reducers: {
-    adicionar: (state, action: PayloadAction<Contato>) => {
+    adicionar: (state, action: PayloadAction<Omit<Contato, 'id'>>) => {
+      //Consigo omitir o id gerado
       const contatoJaExiste = state.contatos.find(
         (contato) => contato.numeroCelular === action.payload.numeroCelular
       )
@@ -57,8 +58,18 @@ const contatoSlice = createSlice({
       if (contatoJaExiste) {
         alert('Ja existe um contato com esse número de celular')
       } else {
-        state.contatos.push(action.payload)
+        const ultimoContatoDaLista = state.contatos[state.contatos.length - 1]
+
+        const novoContato = {
+          ...action.payload,
+          idContato: ultimoContatoDaLista
+            ? ultimoContatoDaLista.idContato + 1
+            : 1
+        }
+
+        state.contatos.push(novoContato)
       }
+      console.log(state.contatos)
     }
   }
 })

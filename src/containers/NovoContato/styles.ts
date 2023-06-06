@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import InputMask from 'react-input-mask'
 
 import variaveis from '../../styles/variaveis'
 
@@ -22,7 +23,7 @@ export const ContainerInputs = styled.div`
   margin-top: 16px;
 `
 
-export const Input = styled.input`
+export const StyledInputMask = styled(InputMask)`
   width: 400px;
   height: 30px;
   margin-bottom: 16px;
