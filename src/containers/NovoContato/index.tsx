@@ -1,30 +1,32 @@
 import { FormEvent, useState } from 'react'
 import { IoMdContact } from 'react-icons/io'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
 import * as S from './styles'
 import variaveis from '../../styles/variaveis'
 import { adicionar } from '../../store/reducers/contatos'
 import Contato from '../../models/Contato'
-import { RootReducer } from '../../store'
 
 const NovoContato = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { contatos } = useSelector((state: RootReducer) => state.contatos)
 
   const [nome, setNome] = useState('')
   const [numero, setNumero] = useState('')
+  const [email, setEmail] = useState('')
 
   const cadastrarNumero = (e: FormEvent) => {
     e.preventDefault()
 
-    const contatoParaAdicionar = new Contato(1, nome, numero)
+    if (nome.trim().includes(' ')) {
+      const contatoParaAdicionar = new Contato(1, nome, email, numero)
 
-    dispatch(adicionar(contatoParaAdicionar))
-    navigate('/')
-    console.log(contatos)
+      dispatch(adicionar(contatoParaAdicionar))
+      navigate('/')
+    } else {
+      alert('Digite nome e sobrenome ou número válido')
+    }
   }
 
   return (
@@ -57,6 +59,15 @@ const NovoContato = () => {
             autoComplete="off"
             value={numero}
             onChange={({ target }) => setNumero(target.value)}
+          />
+          <S.Label htmlFor="email">Email:</S.Label>
+          <S.StyledInputMask
+            mask=""
+            type="text"
+            id="email"
+            autoComplete="off"
+            value={email}
+            onChange={({ target }) => setEmail(target.value)}
           />
         </S.ContainerInputs>
         <S.Botao type="submit">Adicionar</S.Botao>

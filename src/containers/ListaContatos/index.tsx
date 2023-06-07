@@ -18,17 +18,18 @@ const ListaContatos = () => {
   return (
     <>
       <S.Titulo>Clique no contato para editar ou remover</S.Titulo>
-      <ul>
+      <S.ContainerLista>
         {filtraTarefas().map((itens) => (
-          <S.Lista key={itens.idContato}>
+          <S.ListItem key={itens.idContato}>
             <Contato
-              nomeContato={itens.nomeContato}
               idContato={itens.idContato}
+              nomeContato={itens.nomeContato}
+              emailContato={itens.emailContato}
               numeroCelular={itens.numeroCelular}
             />
-          </S.Lista>
+          </S.ListItem>
         ))}
-      </ul>
+      </S.ContainerLista>
     </>
   )
 }

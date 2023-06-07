@@ -10,37 +10,20 @@ const initialState: ContatoState = {
     {
       idContato: 1,
       nomeContato: 'Gabriel Alves',
+      emailContato: 'gabrielalvesqm@gmail.com',
       numeroCelular: '(84)99193-7644'
     },
     {
       idContato: 2,
-      nomeContato: 'Lara Maria',
+      nomeContato: 'Joao Silva',
+      emailContato: 'Joaozinhodasalva@hotmail.com',
       numeroCelular: '(84)99184-3465'
     },
     {
       idContato: 3,
-      nomeContato: 'Geraldo Alves',
+      nomeContato: 'Felipe Tavares',
+      emailContato: 'Felipet1010@outlook.com',
       numeroCelular: '(84)99172-8675'
-    },
-    {
-      idContato: 4,
-      nomeContato: 'Vera Medeiros',
-      numeroCelular: '(84)99193-1386'
-    },
-    {
-      idContato: 5,
-      nomeContato: 'Camile Medeiros',
-      numeroCelular: '(84)99100-0944'
-    },
-    {
-      idContato: 6,
-      nomeContato: 'Bruna Alves',
-      numeroCelular: '(84)99132-7654'
-    },
-    {
-      idContato: 7,
-      nomeContato: 'Raiza França',
-      numeroCelular: '(84)99193-4815'
     }
   ]
 }
@@ -52,7 +35,9 @@ const contatoSlice = createSlice({
     adicionar: (state, action: PayloadAction<Omit<Contato, 'id'>>) => {
       //Consigo omitir o id gerado
       const contatoJaExiste = state.contatos.find(
-        (contato) => contato.numeroCelular === action.payload.numeroCelular
+        (contato) =>
+          contato.numeroCelular.replace(/\D/g, '') ===
+          action.payload.numeroCelular.replace(/\D/g, '')
       )
 
       if (contatoJaExiste) {
@@ -70,10 +55,26 @@ const contatoSlice = createSlice({
         state.contatos.push(novoContato)
       }
       console.log(state.contatos)
+    },
+    remover: (state, action: PayloadAction<number>) => {
+      state.contatos = [
+        ...state.contatos.filter(
+          (contato) => contato.idContato !== action.payload
+        )
+      ]
+    },
+    editar: (state, action: PayloadAction<Contato>) => {
+      const indexDoContato = state.contatos.findIndex(
+        (contato) => contato.idContato === action.payload.idContato
+      )
+
+      if (indexDoContato > 0) {
+        state.contatos[indexDoContato] = action.payload
+      }
     }
   }
 })
 
-export const { adicionar } = contatoSlice.actions
+export const { adicionar, remover, editar } = contatoSlice.actions
 
 export default contatoSlice.reducer

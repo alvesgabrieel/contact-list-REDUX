@@ -1,23 +1,53 @@
+import { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import { IoMdContact } from 'react-icons/io'
 
 import ContatoClass from '../../models/Contato'
 import * as S from './styles'
 import variaveis from '../../styles/variaveis'
-import { useState } from 'react'
+import { remover, editar } from '../../store/reducers/contatos'
 
 type Props = ContatoClass
 
-const Contato = ({ nomeContato, numeroCelular }: Props) => {
-  const [exibirNumero, setExibirNumero] = useState(false)
+const Contato = ({
+  idContato,
+  nomeContato: nomeContatoOriginal,
+  emailContato: emailContatoOriginal,
+  numeroCelular: numeroCelularOriginal
+}: Props) => {
+  const dispatch = useDispatch()
+  const [exibirInfos, setExibirInfos] = useState(false)
   const [exibirBotao, setExibirBotao] = useState(false)
+  const [nomeContato, setNomeContato] = useState('')
+  const [emailContato, setEmailContato] = useState('')
+  const [numeroCelular, setNumeroCelular] = useState('')
+
+  useEffect(() => {
+    if (
+      nomeContatoOriginal.length > 0 ||
+      emailContatoOriginal.length > 0 ||
+      numeroCelularOriginal.length > 0
+    ) {
+      setNomeContato(nomeContatoOriginal)
+      setEmailContato(emailContatoOriginal)
+      setNumeroCelular(numeroCelularOriginal)
+    }
+  }, [nomeContatoOriginal, emailContatoOriginal, numeroCelularOriginal])
 
   function handleClickBotao() {
     setExibirBotao(!exibirBotao)
   }
 
   function handleClickNumero() {
-    setExibirNumero(!exibirNumero)
-    handleClickBotao()
+    if (!exibirInfos) {
+      setExibirInfos(!exibirInfos)
+      handleClickBotao()
+    }
+  }
+
+  function OcultarInformacao() {
+    setExibirInfos(false)
+    setExibirBotao(false)
   }
 
   return (
@@ -32,18 +62,45 @@ const Contato = ({ nomeContato, numeroCelular }: Props) => {
                 width: '45px'
               }}
             />
-            <S.InfoContato>
-              <p>{nomeContato}</p>
-              {exibirNumero && (
+            <S.ContainerInfos>
+              <S.Infos
+                style={{ marginLeft: '32px' }}
+                value={nomeContato}
+                onChange={(e) => setNomeContato(e.target.value)}
+              ></S.Infos>
+              {exibirInfos && (
                 <S.ContainerNumero>
-                  <p>{numeroCelular}</p>
+                  <S.Infos
+                    value={numeroCelular}
+                    onChange={(e) => setNumeroCelular(e.target.value)}
+                  ></S.Infos>
+                  <S.Infos
+                    value={emailContato}
+                    onChange={(e) => setEmailContato(e.target.value)}
+                  ></S.Infos>
                 </S.ContainerNumero>
               )}
-            </S.InfoContato>
+            </S.ContainerInfos>
             {exibirBotao && (
               <S.ContainerBotoes>
-                <S.Botao>Salvar</S.Botao>
-                <S.Botao>Excluir</S.Botao>
+                <S.Botao
+                  onClick={() => {
+                    dispatch(
+                      editar({
+                        idContato,
+                        nomeContato,
+                        emailContato,
+                        numeroCelular
+                      })
+                    )
+                  }}
+                >
+                  Salvar
+                </S.Botao>
+                <S.Botao onClick={() => dispatch(dispatch(remover(idContato)))}>
+                  Excluir
+                </S.Botao>
+                <S.Botao onClick={OcultarInformacao}>Voltar</S.Botao>
               </S.ContainerBotoes>
             )}
           </S.Link>
