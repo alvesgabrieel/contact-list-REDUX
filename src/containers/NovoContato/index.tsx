@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom'
 import * as S from './styles'
 import variaveis from '../../styles/variaveis'
 import { adicionar } from '../../store/reducers/contatos'
-import Contato from '../../models/Contato'
 
 const NovoContato = () => {
   const dispatch = useDispatch()
@@ -20,9 +19,13 @@ const NovoContato = () => {
     e.preventDefault()
 
     if (nome.trim().includes(' ')) {
-      const contatoParaAdicionar = new Contato(1, nome, email, numero)
-
-      dispatch(adicionar(contatoParaAdicionar))
+      dispatch(
+        adicionar({
+          nomeContato: nome,
+          numeroCelular: numero,
+          emailContato: email
+        })
+      )
       navigate('/')
     } else {
       alert('Digite nome e sobrenome ou número válido')

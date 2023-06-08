@@ -32,7 +32,7 @@ const contatoSlice = createSlice({
   name: 'contato',
   initialState,
   reducers: {
-    adicionar: (state, action: PayloadAction<Omit<Contato, 'id'>>) => {
+    adicionar: (state, action: PayloadAction<Omit<Contato, 'idContato'>>) => {
       //Consigo omitir o id gerado
       const contatoJaExiste = state.contatos.find(
         (contato) =>
